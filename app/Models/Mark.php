@@ -47,13 +47,26 @@ class Mark extends Model
 
         $banglaSubjects   = $markInfo->where('subject_relation', '=', 'bangla');
         $banglaTotalMarks = $banglaSubjects->sum('total_marks');
-        $banglaMarks      = $banglaTotalMarks / 2;
-        $banglaMarks      = self::calculateGradePoint($banglaMarks);
+        $banglaStatus     = $banglaSubjects->where('letter_grade', '=', 'F');
+        
+        if(empty($banglaStatus)){
+            $banglaMarks = $banglaTotalMarks / 2;
+        }else{  
+            $banglaMarks = 0;
+        }
+        $banglaMarks = self::calculateGradePoint($banglaMarks);
 
         $englishSubjects   = $markInfo->where('subject_relation', '=', 'english');
         $englishTotalMarks = $englishSubjects->sum('total_marks');
-        $englishMarks      = $englishTotalMarks / 2;
-        $englishMarks      = self::calculateGradePoint($englishMarks);
+        $englisStatus      = $englishSubjects->where('letter_grade', '=', 'F');
+        
+        if(empty($banglaStatus)){
+            $englishMarks = $banglaTotalMarks / 2;
+        }else{  
+            $englishMarks = 0;
+        }
+        
+        $englishMarks = self::calculateGradePoint($englishMarks);
 
 
         $compulsorySubjects = $markInfo->where('subject_type', '=', 'compulsory')->where('subject_relation', '=', null);
@@ -112,7 +125,7 @@ class Mark extends Model
             $items['point'] = '2.00';
         } elseif ($marks >= 33) {
             $items['grade'] = 'D';
-            $items['point'] = '21.00';
+            $items['point'] = '1.00';
         }
         return (object)$items;
     }

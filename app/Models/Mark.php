@@ -48,8 +48,7 @@ class Mark extends Model
         $banglaSubjects   = $markInfo->where('subject_relation', '=', 'bangla');
         $banglaTotalMarks = $banglaSubjects->sum('total_marks');
         $banglaStatus     = $banglaSubjects->where('letter_grade', '=', 'F');
-        
-        if(empty($banglaStatus)){
+        if($banglaStatus->isEmpty()){
             $banglaMarks = $banglaTotalMarks / 2;
         }else{  
             $banglaMarks = 0;
@@ -60,7 +59,7 @@ class Mark extends Model
         $englishTotalMarks = $englishSubjects->sum('total_marks');
         $englisStatus      = $englishSubjects->where('letter_grade', '=', 'F');
         
-        if(empty($englisStatus)){
+        if($englisStatus->isEmpty()){
             $englishMarks = $englishTotalMarks / 2;
         }else{  
             $englishMarks = 0;

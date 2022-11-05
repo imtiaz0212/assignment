@@ -60,8 +60,8 @@ class Mark extends Model
         $englishTotalMarks = $englishSubjects->sum('total_marks');
         $englisStatus      = $englishSubjects->where('letter_grade', '=', 'F');
         
-        if(empty($banglaStatus)){
-            $englishMarks = $banglaTotalMarks / 2;
+        if(empty($englisStatus)){
+            $englishMarks = $englishTotalMarks / 2;
         }else{  
             $englishMarks = 0;
         }

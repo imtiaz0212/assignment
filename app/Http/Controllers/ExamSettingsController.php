@@ -8,6 +8,7 @@ use App\Models\AcSection;
 use App\Models\AcYear;
 use App\Models\Exam;
 use App\Models\ExamSettings;
+use App\Models\Mark;
 use Illuminate\Http\Request;
 
 class ExamSettingsController extends Controller
@@ -118,6 +119,9 @@ class ExamSettingsController extends Controller
     public function destroy($id)
     {
         $data = ExamSettings::find($id);
+        $data->delete();
+
+        $data = Mark::where('exam_setting_id', '=', $id);
         $data->delete();
 
         return redirect()->route('admin.exam-setting')->with(['danger' => 'Exam Settings delete successful.']);
